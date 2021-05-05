@@ -1,4 +1,4 @@
-# My CadQuery projects
+# My CadQuery Projects
 
 ## Setup
 * https://cadquery.readthedocs.io/en/latest/installation.html#installation
@@ -9,7 +9,7 @@
 * CQ-editor.exe
 
 ## Build STL
-* build.py $project_file
+* python build.py $project_file
 
 ## Pipeline 
 * source code --> stl --> slicer --> printer

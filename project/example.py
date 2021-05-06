@@ -1,11 +1,9 @@
-from cqextension.workplane import *
+from cqextension.monkey_patch import *
 from cqextension.selectors import *
-from cqkit import *
+import cadquery as cq
 
-p = WP().box(20, 20, 20)
-s = WP().sphere(9).rotate(
-    [0, 0, 0], [1, 0, 0], 45).translate([10, 10, 10])
-p = p.union(s)
-pprint_obj(p.edges())
-p = p.edges(IndexSelector(9,12,15)).fillet(1)
+p = cq.Workplane().box(20, 20, 20)
+s = p.faces(">Z").box(10, 10, 10, combine=False)
+p = p+s
+p = p.edges(SeamSelector()).fillet(1)
 show_object(p)

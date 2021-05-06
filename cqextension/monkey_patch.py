@@ -53,7 +53,9 @@ def _bool_op(
     ret = original_bool_op(self, args, tools, op)
 
     print('injected')
-    bool_op_section_edges = op.SectionEdges()
+    bool_op_section_edges.clear()
+    for a in op.SectionEdges():
+        bool_op_section_edges.append(a)
     print(bool_op_section_edges)
 
     return ret

@@ -13,12 +13,12 @@
   * conda develop .\cqextension\
 
 ## Start Viewer
-* CQ-editor.exe
+* python viewer.py
 
 ## Build STL
 * python build.py ./project/example.py
 
-## Run a plain file
+## Run a plain file (debugging)
 * python -m project.example
 
 ## Pipeline (WIP)

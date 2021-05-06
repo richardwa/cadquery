@@ -1,3 +1,5 @@
+import cadquery as cq
+
 class IndexSelector(cq.Selector):
     def __init__(self, *indexes):
         self.indexes = indexes

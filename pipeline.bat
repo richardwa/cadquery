@@ -1,1 +1,1 @@
-make --file=pipeline.mk file=%*
+make --file=pipeline.mk all file=%*

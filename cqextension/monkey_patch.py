@@ -36,7 +36,7 @@ def _bool_op(
 ) -> "Shape":
     ret = original_bool_op(self, args, tools, op)
 
-    print('injected')
+    # print('injected')
     bool_op_section_edges.clear()
     for a in op.SectionEdges():
         bool_op_section_edges.append(a)
@@ -54,7 +54,7 @@ class SeamSelector(cq.Selector):
         s.append(obj.geomType())
         s.append(str(obj.startPoint().toTuple()))
         s.append(str(obj.endPoint().toTuple()))
-        if obj_type.upper() == "CIRCLE":
+        if obj.geomType().upper() == "CIRCLE":
             circle = obj._geomAdaptor().Circle()
             radius = circle.Radius()
             centre = circle.Location()

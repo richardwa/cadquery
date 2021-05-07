@@ -3,62 +3,31 @@ from cq_files.utils import hexGrid
 import cadquery as cq
 import math
 
-rimDiameter= 68
-drainDiameter= 37
+rimDiameter = 68
+drainDiameter = 37
 meshSize = 8
-thickness= 1.2
+t = 1.2
+
+holes = math.ceil(rimDiameter/meshSize)
+grate = cq.Workplane().circle(rimDiameter/2-.1).extrude(t).cut(
+    hexGrid(meshSize, t, t,  holes, holes))
+
+ring = cq.Workplane().circle(rimDiameter/2).circle(
+    rimDiameter/2-t).extrude(t*2)
+comb = ring+grate
+
+crossbrace = grate.faces(">Z").workplane().center(-t/2, drainDiameter/2-t)\
+    .rect(t, (rimDiameter-drainDiameter)/2 - .1, centered=False).extrude(t, combine=False)
+crossbrace = crossbrace.faces("<Y").workplane().polyline(
+  ((0,0),(t,0),(2*t, t),(-t,t),(0,0))).close().extrude(-t)
+
+num_braces = 12
+for i in range(num_braces):
+    comb.add(crossbrace.rotate((0, 0, 0), (0, 0, 1), 15+360/num_braces*i))
 
 
-p = hexGrid(6,1,2, 5,5)
-show_object(p)
+drain = ring.faces(">Z").workplane().circle(
+    drainDiameter/2).circle(drainDiameter/2-t).extrude(t*3)
 
-options = {
-
-}
-def showerDrain ( rimDiameter, drainDiameter, meshSize, thickness):
-   ringOuter = ring(
-    od=rimDiameter,
-    id=rimDiameter - t * 2,
-    h=t * 2,
-    radii= [0, 0, 0, t / 2]
-  ).align([0, 0, 1])
-
-   hexMesh = cylinder({ d: rimDiameter - t * 1.8, h: t, $fn: 100 })
-    .difference(
-      hexTile({
-        hexSize: meshSize,
-        spacing: t,
-        size: [rimDiameter, rimDiameter],
-        thickness: t + 1
-      }))
-    .translate([0, 0, t / 2]);
-
-   drainInnerDiameter = drainDiameter - t * 2;
-   braceLen = (rimDiameter - drainDiameter) / 2 + t / 2;
-   braceWidth = t * 1.2;
-   chamferWidth = t - 0.2;
-
-   crossbrace = cube([braceLen, braceWidth, t])
-    .align([1, 1, 1])
-    .union(square([chamferWidth, braceWidth])
-      .linear_extrude({ height: t, scale: [1, 2.5], center: false })
-      .translate([chamferWidth / 2, braceWidth / 2, 0]))
-    .translate([drainInnerDiameter / 2, - t / 2, t])
-    .rotate([0, 0, 15]); // offset a bit so that the bars don't end on center of hex
-
-   ringInner = ring({
-    od: drainDiameter,
-    id: drainInnerDiameter,
-    h: t * 3,
-    $fn: 50,
-  }).align([0, 0, 1])
-    .translate([0, 0, t * 1.8]);
-
-  return ringOuter.union(
-    hexMesh,
-    crossbrace.tile_circular({ times: 12 }),
-    ringInner
-  );
-
-
-show_object(showerDrain(...options))
+comb = (comb + drain)
+show_object(comb)

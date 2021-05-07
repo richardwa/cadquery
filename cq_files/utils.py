@@ -1,7 +1,6 @@
 import cadquery as cq
 import math
 
-
 def hexGrid(hexSize: float, spacing: float, h: float, xCount: int, yCount: int):
     hexSize_1 = hexSize * 2 / math.sqrt(3)
     total = hexSize + spacing

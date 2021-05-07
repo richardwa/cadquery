@@ -11,17 +11,18 @@
 * setup my own extension
   * conda install conda-build
   * conda develop .\cqextension\
+  * conda develop .\cq_files\
 
 ## Start Viewer
-* python viewer.py
+* python -m viewer
 
 ## Build STL
-* python build.py ./project/example.py
+* python -m build ./cq_files/example.py
 
 ## Run a plain file (debugging)
-* python -m project.example
+* python -m cq_files.example
 
 ## Pipeline (WIP)
 * source code --> stl --> slicer --> printer
-* pipeline.bat ./project/example.py
+* pipeline.bat ./cq_files/example.py
 

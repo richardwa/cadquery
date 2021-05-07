@@ -75,3 +75,5 @@ class SeamSelector(cq.Selector):
             if self.str_edge(o) in edges:
                 r.append(o)
         return r
+        
+seamSelector = SeamSelector()

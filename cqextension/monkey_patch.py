@@ -24,22 +24,6 @@ from OCP.BRepAlgoAPI import (
     BRepAlgoAPI_BuilderAlgo,
 )
 
-original_union = cq.Workplane.union
-
-
-def union(self, toUnion, clean: bool = False, glue: bool = False, tol: Optional[float] = None):
-    print('before')
-    pprint_obj(self.edges())
-    pprint_obj(toUnion.edges())
-    res = original_union(self, toUnion, clean, glue, tol)
-    print('after')
-    pprint_obj(res.edges())
-    return res
-
-
-cq.Workplane.union = union
-
-
 bool_op_section_edges = []
 original_bool_op = cq.Shape._bool_op
 
@@ -56,7 +40,7 @@ def _bool_op(
     bool_op_section_edges.clear()
     for a in op.SectionEdges():
         bool_op_section_edges.append(a)
-    print(bool_op_section_edges)
+    # print(bool_op_section_edges)
 
     return ret
 
@@ -67,8 +51,7 @@ cq.Shape._bool_op = _bool_op
 class SeamSelector(cq.Selector):
     def str_edge(self, obj):
         s = []
-        obj_type = obj.geomType().capitalize()
-        s.append(obj_type)
+        s.append(obj.geomType())
         s.append(str(obj.startPoint().toTuple()))
         s.append(str(obj.endPoint().toTuple()))
         if obj_type.upper() == "CIRCLE":
@@ -83,10 +66,12 @@ class SeamSelector(cq.Selector):
         edges = set()
         for e in bool_op_section_edges:
             edge = cq.Shape.cast(e)
+            # print("edge1", self.str_edge(edge))
             edges.add(self.str_edge(edge))
-
         r = []
+
         for o in objectList:
+            # print("edge2", self.str_edge(o))
             if self.str_edge(o) in edges:
                 r.append(o)
         return r

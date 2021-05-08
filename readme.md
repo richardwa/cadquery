@@ -8,10 +8,7 @@
   * git clone https://github.com/michaelgale/cq-kit.git
   * cd cq-kit
   * python setup.py install
-* setup my own extension
-  * conda install conda-build
-  * conda develop .\cqextension\
-  * conda develop .\cq_files\
+* code is referenced in module fashion, always invoke using python -m from project root
 
 ## Start Viewer
 * python -m viewer

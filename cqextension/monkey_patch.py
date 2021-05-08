@@ -1,4 +1,5 @@
 import cadquery as cq
+import builtins
 from cqextension.cq_print import *
 from typing import (
     overload,
@@ -77,3 +78,6 @@ class SeamSelector(cq.Selector):
         return r
         
 seamSelector = SeamSelector()
+
+if "show_object" not in dir(builtins):
+    builtins.show_object = print

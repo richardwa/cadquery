@@ -2,14 +2,19 @@
 import cadquery.cqgi as cqgi
 import cadquery as cq
 import sys, os
+from slicer.slice import getSlicerSettings
 
 cadfile = sys.argv[1]
 cadfile_base = os.path.splitext(cadfile)[0].replace("cq_files","target")
 # load the cadquery script
 model = cqgi.parse(open(cadfile).read())
 
+
 # run the script and store the result (from the show_object call in the script)
 build_result = model.build()
+
+# get slicer settings
+print("settings", getSlicerSettings())
 
 # test to ensure the process worked.
 if build_result.success:

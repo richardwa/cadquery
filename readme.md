@@ -19,7 +19,7 @@
 ## Run a plain file (debugging)
 * python -m cq_files.example
 
-## Pipeline (WIP)
+## Pipeline (pipeline.mk)
 * source code --> stl --> slicer --> printer
 * pipeline.bat ./cq_files/example.py
 

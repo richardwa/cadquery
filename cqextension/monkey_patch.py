@@ -15,8 +15,8 @@ from typing import (
     cast,
     Dict,
 )
-from OCP.TopTools import TopTools_IndexedDataMapOfShapeListOfShape, TopTools_ListOfShape
-from OCP.BRepAlgoAPI import (
+from OCP.TopTools import TopTools_IndexedDataMapOfShapeListOfShape, TopTools_ListOfShape # type: ignore
+from OCP.BRepAlgoAPI import ( # type: ignore
     BRepAlgoAPI_Common,
     BRepAlgoAPI_Fuse,
     BRepAlgoAPI_Cut,
@@ -77,7 +77,7 @@ class SeamSelector(cq.Selector):
                 r.append(o)
         return r
         
-seamSelector = SeamSelector()
+seamSelector = SeamSelector()   
 
 if "show_object" not in dir(builtins):
     builtins.show_object = print

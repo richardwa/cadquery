@@ -2,6 +2,7 @@
 import re
 import sys
 
+# prevent confirms as we are using external ide
 from cq_editor import utils
 utils.confirm = lambda a, b, c: True
 
@@ -9,7 +10,7 @@ utils.confirm = lambda a, b, c: True
 from cq_editor.widgets.editor import Editor
 original_load_from_file = Editor.load_from_file
 
-
+# render files right away 
 def load_from_file(self, fname):
     original_load_from_file(self, fname)
     self.triggerRerender.emit(True)

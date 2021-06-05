@@ -4,9 +4,11 @@ from slicer.slice import setSlicerSettings
 import cadquery as cq
 import math
 
-r = 10
-h = 10
+r = 15
+h = 15
 p = cq.Workplane(inPlane="XZ").spline([(0, h), (r, 0)], [
-    (-1, -1), (0, -1)]).lineTo(0, 0).close().revolve()
+    (-1, -1), (-1, -1)]).lineTo(0, 0).close().revolve()
+
 p = p.faces("<Z").workplane().hole(3, h/2)
-show_object(p)
+
+show_object(p) # type: ignore

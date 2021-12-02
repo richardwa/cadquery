@@ -16,7 +16,7 @@ p = p.faces(">Z").workplane().rect(40, rod_offset * 2, forConstruction=True)\
 # add screw holes and nut insert
 screw_pos = p.faces(">Y").workplane().rect(20, 4).vertices("<Z")
 nut_insert = screw_pos.box(3, 5, 3, combine=False).translate((0, -10, 0))
-p = screw_pos.hole(3, 10) - nut_insert
+p = screw_pos.hole(3, 10).cut(nut_insert)
 
 # create bearing bevel
 bearing_od = 15
@@ -40,4 +40,4 @@ g = cq.Workplane().box(40, gap_size, size[2]).translate(
     (0, rod_offset+rod_od/2 - gap_size/2, 0))
 g = g.faces(">Y").workplane().rect(gap_size, size[2]).extrude(10)
 
-show_object(p-b-g)  # type: ignore
+show_object(p.cut(b).cut(g))  # type: ignore

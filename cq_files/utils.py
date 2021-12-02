@@ -10,5 +10,5 @@ def hexGrid(hexSize: float, spacing: float, h: float, xCount: int, yCount: int):
     p = cq.Workplane().rarray(**param).polygon(6, hexSize_1).extrude(h)
     q = cq.Workplane().center(total_1/2, total/2)\
         .rarray(**param).polygon(6, hexSize_1).extrude(h)
-    return p+q
+    return p.union(q)
 

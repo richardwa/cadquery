@@ -14,7 +14,7 @@ grate = cq.Workplane().circle(rimDiameter/2-.1).extrude(t).cut(
 
 ring = cq.Workplane().circle(rimDiameter/2).circle(
     rimDiameter/2-t).extrude(t*2)
-comb = ring+grate
+comb = ring.union(grate)
 
 crossbrace = grate.faces(">Z").workplane().center(-t/2, drainDiameter/2-t)\
     .rect(t, (rimDiameter-drainDiameter)/2 - .1, centered=False).extrude(t, combine=False)
@@ -29,5 +29,5 @@ for i in range(num_braces):
 drain = ring.faces(">Z").workplane().circle(
     drainDiameter/2).circle(drainDiameter/2-t).extrude(t*3)
 
-comb = (comb + drain)
+comb = comb.union(drain)
 show_object(comb)
